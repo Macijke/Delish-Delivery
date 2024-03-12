@@ -1,10 +1,14 @@
 import React from 'react';
 import './App.css';
-import MainPage from "./MainPageContent/MainPage";
+import Header from "./Pages/Header";
+import Recommendation from "./Pages/Recommendation";
 
 function App() {
   return (
-      <MainPage/>
+      <>
+        <Header/>
+        <Recommendation/>
+      </>
   );
 }
 
