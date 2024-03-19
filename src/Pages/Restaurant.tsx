@@ -1,6 +1,6 @@
 import {Link} from "react-router-dom";
 
-function Restauration(data: any) {
+function Restaurant(data: any) {
     data = data.data;
     return (
         <article className="d-flex justify-content-center">
@@ -23,4 +23,4 @@ function Restauration(data: any) {
     )
 }
 
-export default Restauration;
+export default Restaurant;
