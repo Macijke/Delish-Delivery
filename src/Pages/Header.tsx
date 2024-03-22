@@ -5,7 +5,7 @@ const Header = () => {
     const location = useLocation();
     const data = [
         { link: '/', name: 'Strona główna' },
-        { link: '/restaurations', name: 'Restauracje' },
+        { link: '/restaurants', name: 'Restauracje' },
         { link: '/cart', name: 'Koszyk' },
         { link: '/account', name: 'Zaloguj się' },
     ];

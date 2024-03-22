@@ -15,7 +15,7 @@ root.render(
     <Router>
         <Switch>
             <Route path="/" exact component={App}></Route>
-            <Route path="/restaurations" component={Restaurants}/>
+            <Route path="/restaurants" component={Restaurants}/>
             <Route path="/cart" component={Cart}/>
             <Route path="/account" component={Account}/>
             <Route path="/order/:id" component={Order}/>
