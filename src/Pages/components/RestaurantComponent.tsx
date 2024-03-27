@@ -9,7 +9,7 @@ function RestaurantComponent(data: any) {
                     data.map((item: any) => {
                         return (
                             <div className="d-flex align-items-start flex-column m-sm-auto">
-                                <Link to={"/order/" + item._id} className="text-decoration-none text-black">
+                                <Link to={`/menu/${item._id}`} className="text-decoration-none text-black">
                                     <img className="rounded" src={"images/" + item.image} alt={item.name}/>
                                     <h2 className="fw-bold">{item.name}</h2>
                                     <p className="text-body-tertiary">{item.adress.city + ", ul. " + item.adress.street}</p>

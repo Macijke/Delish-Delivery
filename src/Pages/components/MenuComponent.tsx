@@ -1,6 +1,6 @@
 import {Link} from "react-router-dom";
 
-function OrderComponent(menu: any) {
+function MenuComponent(menu: any) {
     menu = menu.menu;
     return (
         <article className="d-flex justify-content-center">
@@ -8,7 +8,7 @@ function OrderComponent(menu: any) {
                 {menu.map((item: any) => (
                 <div
                     className="d-flex flex-column rounded w-25" style={{maxWidth: 225, minWidth: 125}}>
-                    <Link to={`/options/${item._id}`} className="text-decoration-none text-black">
+                    <Link to={`/order/${item._id}/${item.restaurant_id}`} className="text-decoration-none text-black">
                         <img className="rounded w-100" src={`../images/menu/${item.images}`} alt={item.name}/>
                         <h3 className="fw-bold">{item.name}</h3>
                         <h5 className="fw-bold">Cena: {item.price}PLN</h5>
@@ -23,4 +23,4 @@ function OrderComponent(menu: any) {
     );
 }
 
-export default OrderComponent;
+export default MenuComponent;

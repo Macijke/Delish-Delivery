@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 import Header from "./Header";
 import Footer from "./Footer";
-import RestaurantComponent from "./Components/RestaurantComponent";
+import RestaurantComponent from "./components/RestaurantComponent";
 
 const Restaurants = () => {
     const [restaurants, setRestaurants] = useState([]);

@@ -1,28 +1,29 @@
-import {useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
+import {useParams} from "react-router-dom";
+import OrderComponent from "./components/OrderComponent";
 import Header from "./Header";
-import OrderComponent from "./Components/OrderComponent";
 
 interface RouteParams {
-    id: string;
+    restaurantId: string,
+    foodId: string
 }
 
-const Order = () => {
-    const [menu, setMenu] = useState([]);
-    const {id} = useParams<RouteParams>();
+function Order() {
+    const [order, setOrder] = useState([]);
+    const {restaurantId, foodId} = useParams<RouteParams>();
 
     useEffect(() => {
-        fetch(`http://localhost:3333/menu/${id}`)
+        fetch(`http://localhost:3333/menu/${restaurantId}/${foodId}`)
             .then(response => response.json())
-            .then(json => setMenu(json))
+            .then(json => setOrder(json))
             .catch(console.error);
-    }, [id]);
+    }, [restaurantId, foodId]);
 
     return (
-        <>
-            <Header/>
-            <OrderComponent menu={menu}/>
-        </>
+      <>
+          <Header/>
+        <OrderComponent order={order}/>
+      </>
     );
 }
 
