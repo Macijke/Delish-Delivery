@@ -2,6 +2,7 @@ import {Link} from "react-router-dom";
 
 function MenuComponent(menu: any) {
     menu = menu.menu;
+    console.log(menu)
     return (
         <article className="d-flex justify-content-center">
             <div className="d-flex justify-content-evenly flex-wrap w-75 row-gap-5 column-gap-4">

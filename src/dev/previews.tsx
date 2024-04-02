@@ -3,6 +3,7 @@ import {PaletteTree} from "./palette";
 import App from "../App";
 import Header from "../Pages/Header";
 import Restaurants from "../Pages/Restaurants";
+import RecommendationComponent from "../Pages/components/RecommendationComponent";
 
 const ComponentPreviews = () => {
     return (
@@ -15,6 +16,10 @@ const ComponentPreviews = () => {
             </ComponentPreview>
             <ComponentPreview path="/Restaurations">
                 <Restaurants/>
+            </ComponentPreview>
+            <ComponentPreview
+                path="/RecommendationComponent">
+                <RecommendationComponent/>
             </ComponentPreview>
         </Previews>
     );
