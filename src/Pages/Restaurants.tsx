@@ -12,7 +12,6 @@ const Restaurants = () => {
             .then(json => setRestaurants(json))
             .catch(error => console.log("error", error));
     }, []);
-
     return (
         <>
             <Header/>
