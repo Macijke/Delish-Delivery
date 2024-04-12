@@ -1,4 +1,26 @@
+import {useCookies} from "react-cookie";
+import {useParams} from "react-router-dom";
+
+interface RouteParams {
+    restaurantId: string,
+    foodId: string
+}
+
 function OrderComponent(order: any) {
+    const {restaurantId, foodId} = useParams<RouteParams>();
+    function handleSubmit(e:any) {
+        e.preventDefault();
+        const data = new FormData(e.target);
+        let datas = {meat: data.get('meat'), sauce: data.get('sauce'), restaurant: restaurantId, food: foodId};
+        if (cookies.cart === undefined) {
+            setCookies('cart', [datas], {path: '/', expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7)});
+        } else {
+            setCookies('cart', [...cookies.cart, datas], {path: '/', expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7)});
+        }
+    }
+
+    const [cookies, setCookies, removeCookies] = useCookies(['cart']);
+
     if (order.order.length !== 0) {
         order = order.order[0];
 
@@ -6,7 +28,7 @@ function OrderComponent(order: any) {
             <>
                 <article className="d-flex justify-content-center flex-wrap">
                     <div className="d-flex flex-column rounded w-25 text-center mb-5">
-                        <form>
+                        <form onSubmit={handleSubmit}>
                             {order.meat.length !== 0 || order.sauces.length !== 0 ?
                                 <h1 className="fw-bold">Dodatki</h1> : ""}
                             <div className="mb-4">
@@ -36,6 +58,9 @@ function OrderComponent(order: any) {
                                     </div>
                                 ))}
                             </div>
+                            <div className="align-content-end flex-wrap">
+                                <button type="submit" className="btn btn-primary">Dodaj do koszyka</button>
+                            </div>
                         </form>
                     </div>
                     <div className="d-flex flex-column rounded w-25">
@@ -54,5 +79,7 @@ function OrderComponent(order: any) {
     }
 
 }
+
+
 
 export default OrderComponent;
