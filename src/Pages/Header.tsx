@@ -1,13 +1,15 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import {useLocation, Link} from "react-router-dom";
+import {useCookies} from "react-cookie";
 
 const Header = () => {
     const location = useLocation();
+    const [cookies] = useCookies(['user']);
     const data = [
         { link: '/', name: 'Strona główna' },
         { link: '/restaurants', name: 'Restauracje' },
         { link: '/cart', name: 'Koszyk' },
-        { link: '/account', name: 'Zaloguj się' },
+        { link: '/account', name: cookies.user ? 'Konto' : 'Zaloguj się'},
     ];
 
     return (
