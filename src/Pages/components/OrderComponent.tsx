@@ -1,5 +1,6 @@
 import {useCookies} from "react-cookie";
 import {useParams} from "react-router-dom";
+import {useState} from "react";
 
 interface RouteParams {
     restaurantId: string,
@@ -8,8 +9,11 @@ interface RouteParams {
 
 function OrderComponent(order: any) {
     const {restaurantId, foodId} = useParams<RouteParams>();
+    const [cookies, setCookies] = useCookies(['cart']);
+    const [itemAdded, setItemAdded] = useState(false);
     function handleSubmit(e:any) {
         e.preventDefault();
+        setItemAdded(true);
         const data = new FormData(e.target);
         let datas = {meat: data.get('meat'), sauce: data.get('sauce'), restaurant: restaurantId, food: foodId};
         if (cookies.cart === undefined) {
@@ -19,7 +23,6 @@ function OrderComponent(order: any) {
         }
     }
 
-    const [cookies, setCookies, removeCookies] = useCookies(['cart']);
 
     if (order.order.length !== 0) {
         order = order.order[0];
@@ -60,6 +63,7 @@ function OrderComponent(order: any) {
                             </div>
                             <div className="align-content-end flex-wrap">
                                 <button type="submit" className="btn btn-primary">Dodaj do koszyka</button>
+                                {itemAdded && <p>Przedmiot został dodany do koszyka!</p>}
                             </div>
                         </form>
                     </div>

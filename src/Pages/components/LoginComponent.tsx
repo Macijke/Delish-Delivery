@@ -31,7 +31,7 @@ const LoginForm: React.FC = () => {
             body: JSON.stringify(loginData),
         }).then(response => response.json()).then(json => {
             if (loginData.email === json.email && loginData.password === json.password) {
-                setCookie('user', json, { path: '/' });
+                setCookie('user', json, { path: '/', expires: new Date(), maxAge: 3600});
                 history.push('/account');
             } else {
                 setError('Invalid username or password');

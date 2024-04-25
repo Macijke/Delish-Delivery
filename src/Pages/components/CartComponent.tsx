@@ -1,40 +1,13 @@
-import {useCookies} from "react-cookie";
-import {useEffect, useRef, useState} from "react";
-
-function mergeCookiesAndCart(cookies: Object, cart: Object) {
-    return {...cookies, ...cart};
-}
+import {useCart} from "../useCart";
+import {Link} from "react-router-dom";
 
 function CartComponent() {
-    const [cookies, setCookie] = useCookies(['cart']);
-    const [cart, setCart] = useState([] as any);
-    const initialized = useRef(false);
-
-    useEffect(() => {
-        if (!initialized.current) {
-            initialized.current = true;
-            cookies.cart.map((item: any) => (
-                fetch(`http://localhost:3333/menu/${item.restaurant}/${item.food}`)
-                    .then(response => response.json())
-                    .then(json => {
-                        const merged = mergeCookiesAndCart(json[0], item);
-                        setCart((prevCart: any) => [...prevCart, merged]);
-                    })
-                    .catch(console.error)
-            ));
-        }
-    }, [cookies.cart]);
-    
-
-    const handleDelete = (itemToDelete: any) => {
-        const updatedCart = cart.filter((item: any) => item !== itemToDelete);
-        setCart(updatedCart);
-        setCookie('cart', updatedCart, {path: '/'});
-    };
+    const {cart, handleDelete, calculateTotalPrice} = useCart();
 
     return (
         <article className="d-flex justify-content-center flex-column align-items-center">
-            <div><h1 className="text-center font-weight-100 fw-bold">Koszyk</h1></div>
+            {cart.length === 0 ? <div><h1 className="text-center font-weight-100 fw-bold">Koszyk jest pusty</h1></div> :
+                <div><h1 className="text-center font-weight-100 fw-bold">Koszyk</h1></div>}
             <section className="d-flex justify-content-center flex-column w-50">
                 {cart.map((item: any, index: number) => (
                     <div key={index} className="d-flex flex-row rounded m-3" style={{minWidth: 125}}>
@@ -62,6 +35,13 @@ function CartComponent() {
                     </div>
                 ))}
             </section>
+            {cart.length === 0 ? "" : <div>
+                <hr/>
+                <h2>Całkowita cena: {calculateTotalPrice()}PLN</h2>
+                <hr/>
+                <Link to="/cart/complete" className="btn btn-primary text-center">Zamów</Link>
+            </div>}
+
         </article>
     );
 }
