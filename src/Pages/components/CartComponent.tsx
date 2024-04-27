@@ -1,9 +1,11 @@
 import {useCart} from "../useCart";
 import {Link} from "react-router-dom";
+import {useCookies} from "react-cookie";
 
 function CartComponent() {
     const {cart, handleDelete, calculateTotalPrice} = useCart();
-
+    const [cookies, setCookie] = useCookies();
+    const userCookie = cookies.user;
     return (
         <article className="d-flex justify-content-center flex-column align-items-center">
             {cart.length === 0 ? <div><h1 className="text-center font-weight-100 fw-bold">Koszyk jest pusty</h1></div> :
@@ -39,7 +41,7 @@ function CartComponent() {
                 <hr/>
                 <h2>Całkowita cena: {calculateTotalPrice()}PLN</h2>
                 <hr/>
-                <Link to="/cart/complete" className="btn btn-primary text-center">Zamów</Link>
+                {userCookie ? <Link to="/cart/complete" className="btn btn-primary text-center">Zamów</Link> : <Link to="/account" className="btn btn-primary text-center">Zaloguj się</Link>}
             </div>}
 
         </article>

@@ -34,24 +34,28 @@ const LoginForm: React.FC = () => {
                 setCookie('user', json, { path: '/', expires: new Date(), maxAge: 3600});
                 history.push('/account');
             } else {
-                setError('Invalid username or password');
+                setError('Nieprawidłowy adres email lub hasło. Spróbuj ponownie.');
             }
         }).catch(console.error);
     };
 
     return (
-        <form onSubmit={login} className="p-3">
-            <div className="mb-3">
-                <label className="form-label">Username:</label>
-                <input type="text" name="email" onChange={handleInputChange} className="form-control"/>
-            </div>
-            <div className="mb-3">
-                <label className="form-label">Password:</label>
-                <input type="password" name="password" onChange={handleInputChange} className="form-control"/>
-            </div>
-            {error && <div className="alert alert-danger">{error}</div>}
-            <button type="submit" className="btn btn-primary">Log in</button>
-        </form>
+        <main className="d-flex justify-content-center">
+            <article className="w-25 d-flex justify-content-center">
+                <form onSubmit={login} className="p-3 flex-grow-1">
+                    <div className="mb-3">
+                        <label className="form-label">Adres email:</label>
+                        <input type="text" name="email" onChange={handleInputChange} className="form-control"/>
+                    </div>
+                    <div className="mb-3">
+                        <label className="form-label">Hasło:</label>
+                        <input type="password" name="password" onChange={handleInputChange} className="form-control"/>
+                    </div>
+                    {error && <div className="alert alert-danger">{error}</div>}
+                    <button type="submit" className="btn btn-primary">Zaloguj się</button>
+                </form>
+            </article>
+        </main>
     );
 };
 

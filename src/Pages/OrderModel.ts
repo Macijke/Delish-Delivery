@@ -9,5 +9,6 @@ export interface Item {
 export interface Order {
     userId: string;
     items: Item[];
+    totalPrice: number;
 }
 

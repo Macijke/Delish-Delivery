@@ -8,6 +8,8 @@ import Account from "./Pages/Account";
 import Menu from "./Pages/Menu";
 import Order from "./Pages/Order";
 import CompleteOrder from "./Pages/components/CompleteOrder";
+import OrderData from "./Pages/OrderData";
+import OrderHistory from "./Pages/OrderHistory";
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
@@ -19,10 +21,13 @@ root.render(
             <Route path="/" exact component={App}/>
             <Route path="/restaurants" component={Restaurants}/>
             <Route path="/cart" exact component={Cart}/>
-            <Route path="/account" component={Account}/>
+            <Route path="/account" exact component={Account}/>
             <Route path="/menu/:id" component={Menu}/>
             <Route path="/order/:foodId/:restaurantId" component={Order}/>
             <Route path="/cart/complete" component={CompleteOrder}/>
+            <Route path="/account/order/history" component={OrderHistory}/>
+            <Route path="/account/order/orderdata" component={OrderData}/>
+
         </Switch>
     </Router>
 );

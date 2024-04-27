@@ -23,7 +23,8 @@ function CompleteOrder() {
         });
         let order: Order = {
             userId: cookieUser[0]._id,
-            items: itemsOrder
+            items: itemsOrder,
+            totalPrice: cart.reduce((acc: number, item: any) => acc + item.price, 0)
         }
         console.log(order);
         fetch('http://localhost:3333/makeOrder', {
