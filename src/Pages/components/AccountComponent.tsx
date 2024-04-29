@@ -4,20 +4,21 @@ import OrderHistory from "../OrderHistory";
 function AccountComponent() {
     return (
         <>
-            <div>
+            <div className="container">
                 <nav>
-                    <ul className="nav nav-underline d-flex justify-content-evenly mb-4 mt-2">
-                        {/* <li key="historiaZamowien" className="nav-item">*/}
-                        {/*    <Link to="/account/order/history" className="nav-link">Historia zamówień</Link>*/}
-                        {/*</li> */}
-                        <li key="informacjeKonta" className="nav-item">
+                    <ul className="nav nav-underline justify-content-evenly mt-4 mb-4">
+                        <li className="nav-item">
                             <Link to="/account/order/orderdata" className="nav-link">Zmień dane dostawy</Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link to="/account/logout" className="nav-link">Wyloguj</Link>
                         </li>
                     </ul>
                 </nav>
             </div>
-            <OrderHistory/>
+            <OrderHistory />
         </>
+
     )
 }
 

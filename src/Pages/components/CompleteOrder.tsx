@@ -1,12 +1,31 @@
 import {useCookies} from "react-cookie";
-import {useCart} from "../useCart";
 import Header from "../Header";
 import {Item, Order} from "../OrderModel";
+import React, {useEffect, useState} from "react";
+import {useHistory} from "react-router-dom";
+
+function mergeCookiesAndCart(cookies: Object, cart: Object) {
+    return {...cookies, ...cart};
+}
 
 function CompleteOrder() {
+    const [ordered, setOrdered] = useState(false);
     const [cookies, setCookies] = useCookies();
-    const {cart} = useCart();
+    const [cart, setCart] = useState([] as any);
+    useEffect(() => {
+        cookies.cart.map((item: any) => (
+            fetch(`http://localhost:3333/menu/${item.restaurant}/${item.food}`)
+                .then(response => response.json())
+                .then(json => {
+                    const merged = mergeCookiesAndCart(json[0], item);
+                    setCart((prevCart: any) => [...prevCart, merged]);
+                })
+                .catch(console.error)
+        ));
+
+    }, [cookies.cart]);
     const cookieUser = [cookies.user];
+    const history = useHistory();
 
     function handleCompleteOrder(e: any) {
         e.preventDefault();
@@ -26,7 +45,6 @@ function CompleteOrder() {
             items: itemsOrder,
             totalPrice: cart.reduce((acc: number, item: any) => acc + item.price, 0)
         }
-        console.log(order);
         fetch('http://localhost:3333/makeOrder', {
             method: 'POST',
             headers: {
@@ -34,8 +52,13 @@ function CompleteOrder() {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(order)
+        }).then(response => response.text()).then(json => {
+            setOrdered(true);
+            setCookies('cart', [], {path: '/'});
+            setTimeout(() => {
+                history.push('/');
+            }, 3500);
         });
-        setCookies('cart', [], {path: '/'});
     }
 
     return (
@@ -87,12 +110,26 @@ function CompleteOrder() {
                         </div>
                     ))}
                     <h6>Jeżeli dane nie zgadzają się popraw je w zakładce Konto.</h6>
-
                 </section>
             </article>
-            <div className="d-flex justify-content-center">
-                <button className="btn btn-primary" onClick={handleCompleteOrder}>Potwierdź zamówienie</button>
+
+
+            <div className="d-flex justify-content-center mt-4">
+                <h3 className="fw-bold ">Cena
+                    całkowita: {cart.reduce((acc: number, item: any) => acc + item.price, 0)}PLN</h3>
             </div>
+            <div className="d-flex justify-content-center mt-4">
+                <div>
+                    <button className="btn btn-primary me-5" onClick={handleCompleteOrder}>Potwierdź zamówienie</button>
+                    <button className="btn btn-secondary me-3" onClick={() => history.push('/cart')}>Wróć do koszyka
+                    </button>
+                </div>
+            </div>
+            {ordered && (
+                <div className="alert alert-success mt-4" role="alert">
+                    Pomyślnie złożono zamówienie!
+                </div>
+            )}
         </>
     );
 }

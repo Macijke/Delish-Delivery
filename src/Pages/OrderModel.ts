@@ -1,9 +1,10 @@
 export interface Item {
     restaurantId: string;
     foodId: string;
+    price: number;
+    status?: string;
     sauce?: string;
     meat?: string;
-    price: number;
 }
 
 export interface Order {

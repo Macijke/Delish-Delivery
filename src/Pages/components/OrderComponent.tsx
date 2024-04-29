@@ -1,6 +1,6 @@
 import {useCookies} from "react-cookie";
 import {useParams} from "react-router-dom";
-import {useState} from "react";
+import React, {useState} from "react";
 
 interface RouteParams {
     restaurantId: string,
@@ -29,54 +29,65 @@ function OrderComponent(order: any) {
 
         return (
             <>
-                <article className="d-flex justify-content-center flex-wrap">
-                    <div className="d-flex flex-column rounded w-25 text-center mb-5">
-                        <form onSubmit={handleSubmit}>
-                            {order.meat.length !== 0 || order.sauces.length !== 0 ?
-                                <h1 className="fw-bold">Dodatki</h1> : ""}
-                            <div className="mb-4">
-                                {order.meat.length === 0 ? "" :
-                                    <h4>Mięso:</h4>
-                                }
-                                {order.meat.map((item: any) => (
-                                    <div className="form-check">
-                                        <input className="form-check-input" type="radio" name="meat" id={item} value={item}/>
-                                        <label className="form-check-label" htmlFor={item}>
-                                            {item}
-                                        </label>
-                                    </div>
-                                ))}
+                <div className="container">
+                    <div className="row justify-content-center">
+                        <div className="col-lg-6 mb-5">
+                            <form onSubmit={handleSubmit} className="card p-4">
+                                {order.meat.length !== 0 || order.sauces.length !== 0 && (
+                                    <h2 className="text-center fw-bold mb-4">Dodatki</h2>
+                                )}
+                                <div className="mb-4">
+                                    {order.meat.length !== 0 && (
+                                        <>
+                                            <h4 className="mb-3">Mięso:</h4>
+                                            {order.meat.map((item: any) => (
+                                                <div key={item} className="form-check">
+                                                    <input className="form-check-input" type="radio" name="meat" id={item} value={item}/>
+                                                    <label className="form-check-label" htmlFor={item}>
+                                                        {item}
+                                                    </label>
+                                                </div>
+                                            ))}
+                                        </>
+                                    )}
+                                    {order.sauces.length !== 0 && (
+                                        <>
+                                            <h4 className="mb-3">Sos:</h4>
+                                            {order.sauces.map((item: any) => (
+                                                <div key={item} className="form-check">
+                                                    <input className="form-check-input" type="radio" name="sauce" id={item} value={item}/>
+                                                    <label className="form-check-label" htmlFor={item}>
+                                                        {item}
+                                                    </label>
+                                                </div>
+                                            ))}
+                                        </>
+                                    )}
+                                </div>
+                                <div className="d-grid gap-2">
+                                    <button type="submit" className="btn btn-primary">Dodaj do koszyka</button>
+                                    {itemAdded && (
+                                        <div className="alert alert-success mt-3" role="alert">
+                                            Dodano do koszyka!
+                                        </div>
+                                    )}
+                                </div>
+                            </form>
+                        </div>
+                        <div className="col-lg-6 mb-5">
+                            <div className="card">
+                                <img src={`../../images/menu/${order.images}`} className="card-img-top rounded" alt={order.name}/>
+                                <div className="card-body">
+                                    <h3 className="card-title fw-bold">{order.name}</h3>
+                                    <h5 className="card-text fw-bold">Cena: {order.price}PLN</h5>
+                                    <p className="card-text text-body-tertiary">{order.products.join(', ')}</p>
+                                </div>
                             </div>
-                            <div className="mb-4">
-                                {order.sauces.length === 0 ? "" :
-                                    <h4>Sos:</h4>
-                                }
-                                {order.sauces.map((item: any) => (
-                                    <div className="form-check">
-                                        <input className="form-check-input" type="radio" name="sauce" id={item}
-                                               value={item}/>
-                                        <label className="form-check-label" htmlFor={item}>
-                                            {item}
-                                        </label>
-                                    </div>
-                                ))}
-                            </div>
-                            <div className="align-content-end flex-wrap">
-                                <button type="submit" className="btn btn-primary">Dodaj do koszyka</button>
-                                {itemAdded && <p>Przedmiot został dodany do koszyka!</p>}
-                            </div>
-                        </form>
-                    </div>
-                    <div className="d-flex flex-column rounded w-25">
-                        <img className="rounded w-100" src={`../../images/menu/${order.images}`} alt={order.name}/>
-                        <h3 className="fw-bold">{order.name}</h3>
-                        <h5 className="fw-bold">Cena: {order.price}PLN</h5>
-                        <div className="text-body-tertiary">
-                            {order.products.join(', ')}
                         </div>
                     </div>
-                </article>
+                </div>
             </>
+
         );
     } else {
         return <></>;

@@ -10,7 +10,7 @@ interface RouteParams {
 const Menu = () => {
     const [menu, setMenu] = useState([]);
     const {id} = useParams<RouteParams>();
-    console.log(menu)
+
     useEffect(() => {
         fetch(`http://localhost:3333/menu/${id}`)
             .then(response => response.json())

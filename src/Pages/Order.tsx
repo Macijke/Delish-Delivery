@@ -20,10 +20,10 @@ function Order() {
     }, [restaurantId, foodId]);
 
     return (
-      <>
-          <Header/>
-        <OrderComponent order={order}/>
-      </>
+        <>
+            <Header/>
+            <OrderComponent order={order}/>
+        </>
     );
 }
 

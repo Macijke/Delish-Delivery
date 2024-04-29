@@ -3,20 +3,22 @@ import {Link} from "react-router-dom";
 function RestaurantComponent(data: any) {
     data = data.data;
     return (
-        <article className="d-flex justify-content-center">
-            <div className="d-flex justify-content-evenly flex-wrap w-75">
-                {
-                    data.map((item: any) => {
-                        return (
-                            <div className="d-flex align-items-start flex-column m-sm-auto">
-                                <Link to={`/menu/${item._id}`} className="text-decoration-none text-black">
-                                    <img className="rounded" src={"images/" + item.image} alt={item.name}/>
-                                    <h2 className="fw-bold">{item.name}</h2>
-                                    <p className="text-body-tertiary">{item.adress.city + ", ul. " + item.adress.street}</p>
-                                </Link>
-                            </div>);
-                    })
-                }
+        <article className="container">
+            <div className="row justify-content-center">
+                {data.map((item:any, index:number) => (
+                    <div key={index} className="col-lg-4 col-md-6 col-sm-12 mb-4">
+                        <div className="card">
+                            <Link to={`/menu/${item._id}`} className="text-decoration-none text-dark">
+                                <img src={"images/" + item.image} className="card-img-top rounded" alt={item.name}/>
+                                <div className="card-body">
+                                    <h2 className="card-title fw-bold">{item.name}</h2>
+                                    <p className="card-text text-body-tertiary">{item.adress.city},
+                                        ul. {item.adress.street}</p>
+                                </div>
+                            </Link>
+                        </div>
+                    </div>
+                ))}
             </div>
         </article>
     )

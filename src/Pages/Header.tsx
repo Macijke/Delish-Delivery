@@ -13,14 +13,23 @@ const Header = () => {
     ];
 
     return (
-        <nav>
-            <ul className="nav nav-underline d-flex justify-content-evenly mb-4 mt-2">
-                {data.map(({link, name}) => (
-                    <li key={link} className="nav-item">
-                        <Link to={link} className={link === location.pathname ? 'active nav-link' : 'nav-link'}>{name}</Link>
-                    </li>
-                ))}
-            </ul>
+        <nav className="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+            <div className="container-fluid">
+                <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span className="navbar-toggler-icon"></span>
+                </button>
+                <div className="collapse navbar-collapse" id="navbarNav">
+                    <ul className="navbar-nav mx-auto">
+                        {data.map(({link, name}) => (
+                            <li key={link} className="nav-item">
+                                <Link to={link}
+                                      className={link === location.pathname ? 'nav-link active' : 'nav-link'}>{name}</Link>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            </div>
         </nav>
     );
 }
